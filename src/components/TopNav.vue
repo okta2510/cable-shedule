@@ -1,82 +1,89 @@
 <template>
-   <div class="container">
-      <div class="alert alert-success" role="alert">
-      <h4 class="alert-heading"></h4>
-      <p>asdasda</p>
-      <p class="mb-0"></p>
-    </div>
-<font-awesome-icon icon="coffee" />
-  <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-  Tooltip on top
-</button>
-<button-counter></button-counter>
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="./../assets/img/logo.png" alt="" height="60">
+      <span class="font-weight-bold px-2">
+        610
+      </span>
+    </a>
+    </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-   </div>
-   
+    <ul class="navbar-nav d-inline-block">
+      <!-- <li v-for="link in links" class="nav-item">
+        <a class="nav-link" v-bind:href="link.url">{{link.name}}</a>
+      </li> -->
+      <li>
+        <a class="nav-link" href="javascript:void(0);">
+          <font-awesome-icon icon="cog" @click="toggleMenu"/>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="javascript:void(0);">
+          <font-awesome-icon icon="question-circle" />
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="javascript:void(0);">
+          <font-awesome-icon icon="user" /> Hello, 
+          <span v-if="user">{{user.name}}</span>
+          <span v-else>Welcome</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
+import Vue from 'vue'
+
+
+
 export default {
-  name: 'TopNav',
+  name: 'topNav',
+  props:['links'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      totalPost:''
+      user:''
     }
   },
-  created(){
-    $(document).ready(function(){
-    });
-
-    	this.$http.get('wp/v2/cbl_2018?per_page=100').then(response => {
+  beforeCreate(){
+    this.$http.get('user').then(response => {
 				// console.log(response);
-				this.totalPost = response.body.length;
+        this.user = response.body[0];
+        
 			}, err => {
 				console.log(err);
 			});
+  },
+  methods:{
+    toggleMenu(){
+      $("#side-menu").toggleClass("d-none");
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style scoped lang="scss">
+  .navbar-light .navbar-nav {
+    width: 50%;
+    text-align: right;
+    li {
+      display: inline-block;
+    }
+  }
+  .navbar-light .navbar-nav .nav-link {
+    font-size: 18px;
+    margin: 0 5px;
+      &:hover,&:focus {
+        color:#3389C9;
+      }
+  }
+  .navbar-brand {
+    padding: 0;
+    span {
+      font-size: 32px;
+      color:#3389C9;
+    }
+  }
 </style>

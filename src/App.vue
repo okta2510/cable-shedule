@@ -1,46 +1,66 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <div id="side-menu" class="d-none">
+     <div class="d-flex">
+        <h2>tolbar</h2>
+        <font-awesome-icon icon="times"/>
+        <font-awesome-icon icon="sync-alt"/>
+     </div>
+    </div>
+    <topNav v-bind:links="links"></topNav>
     <router-view/>
+
   </div>
+  
 </template>
 
 <script>
 import Vue from 'vue'
+import router from './router'
+
+// get bootstrap
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-Vue.use(BootstrapVue);
+// get vuetify
+import 'vuetify/dist/vuetify.min.css'
 
-Vue.component('button-counter', {
-  props: ['post'],
-  data: function () {
-    return {
-      count: 0
-    }
-  },
-  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-})
+import topNav from './components/topNav'
+
+Vue.use(BootstrapVue);
 
 export default {
   name: 'App',
+  components: { topNav },
+  data:function(){
+    return {
+      links:[{
+        name:'dashboard',
+        url:'/'
+      },{
+        name:'tes',
+        url:'/test'
+      }],
+    }
+  },
   created(){
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped lang="scss" >
+#side-menu {
+  width: 300px;
+  background-color: #184470;
+  color:#fff;
+  position: fixed;
+  top:75px;
+  right: 0px;
+  z-index: 9;
+  bottom: 0;
+  height:100%;
 }
 </style>

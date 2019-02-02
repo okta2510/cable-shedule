@@ -1,82 +1,124 @@
 <template>
-   <div class="container">
-      <div class="alert alert-success" role="alert">
-      <h4 class="alert-heading"></h4>
-      <p>asdasda</p>
-      <p class="mb-0"></p>
-    </div>
-<font-awesome-icon icon="coffee" />
-  <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-  Tooltip on top
-</button>
-<button-counter></button-counter>
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+  <div class="pt-5">
+    <h1 class="text-center font-weight-bold text-success mb-3 text-uppercase">Cable Schedule</h1>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class="container-fluid">
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="schedules"
+        :pagination.sync="pagination"
+        select-all
+        item-key="name"
+        class="elevation-1"
+        :loading="true"
+      >
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                primary
+                hide-details
+                @click.stop="toggleAll"
+              ></v-checkbox>
+            </th>
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              <v-icon small>arrow_upward</v-icon>
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
+        <template slot="items" slot-scope="props">
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                :input-value="props.selected"
+                primary
+                hide-details
+              ></v-checkbox>
+            </td>
+            <td>{{ props.item.status }}</td>
+            <td class="">{{ props.item.board}}</td>
+            <td class="">{{ props.item.circuit }}</td>
+            <td class="">{{ props.item.consumer }}</td>
+            <td class="">{{ props.item.consumer_label }}</td>
+            <td class="">{{ props.item.utype }}</td>
+            <td class="">{{ props.item.unit_rating}}</td>
+            <td class="">{{ props.item.consumer_desc }}</td>
+            <td class="">{{ props.item.consumer_desc }}</td>
+          </tr>
+        </template>
+      </v-data-table>
     </div>
   </div>
-</div>
-
-   </div>
-   
 </template>
 
 <script>
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify)
 export default {
   name: 'dashboard',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      totalPost:''
+      pagination: {
+        sortBy: 'circuit',
+        rowsPerPage:8
+      },
+      selected: [],
+      headers: [
+        {
+          text: 'Status',
+          align: 'left',
+          value: 'status'
+        },
+        { text: 'Board', value: 'board' },
+        { text: 'Circuit', value: 'circuit' },
+        { text: 'consumer', value: 'consumer' },
+        { text: 'Consumer Label', value: 'consumer_label' },
+        { text: 'U Type', value: 'utype' },
+        { text: 'Unit Rating', value: 'unit_rating' },
+        { text: 'Consumer Description', value: 'consumer_desc' },
+        { text: 'Consumer Description Label', value: 'consumer_desc_label' },
+      ],
+      schedules: []
     }
   },
-  created(){
-    $(document).ready(function(){
+  beforeCreate(){
+    this.$http.get('schedule').then(response => {
+      // console.log(response);
+      this.schedules = response.body;
+      
+    }, err => {
+      console.log(err);
     });
-
-    	this.$http.get('wp/v2/cbl_2018?per_page=100').then(response => {
-				// console.log(response);
-				this.totalPost = response.body.length;
-			}, err => {
-				console.log(err);
-			});
-  }
+  },
+   methods: {
+      toggleAll () {
+        if (this.selected.length) this.selected = []
+        else this.selected = this.schedules.slice()
+      },
+      changeSort (column) {
+        if (this.pagination.sortBy === column) {
+          this.pagination.descending = !this.pagination.descending
+        } else {
+          this.pagination.sortBy = column
+          this.pagination.descending = false
+        }
+      }
+    }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style scoped lang="scss">
 </style>

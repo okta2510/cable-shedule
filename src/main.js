@@ -6,13 +6,16 @@ import router from './router'
 import VueResource from 'vue-resource'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee,faCog,faQuestionCircle,faUser,faTimes,faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCoffee)
+
+
+library.add(faCoffee,faCog,faQuestionCircle,faUser,faTimes,faSyncAlt)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueResource);
-Vue.http.options.root = 'https://api.rumahdongengpelangi.com/wp-json'
+
+Vue.http.options.root = 'https://5c55e28f09580600147c4db1.mockapi.io/api/v1'
 Vue.config.productionTip = false
 
 Vue.config.productionTip = false
@@ -22,5 +25,10 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  created() {
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  }
 })

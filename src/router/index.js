@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import TopNav from '@/components/TopNav'
+import test from '@/components/test'
 import dashboard from '@/pages/dashboard'
 
 Vue.use(Router)
@@ -26,8 +26,8 @@ export default new Router({
     },
     {
       path: '/test',
-      name: 'TopNav',
-      component: TopNav
+      name: 'test',
+      component: test
     }
   ]
 })
