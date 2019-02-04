@@ -1,14 +1,13 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm ">
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="./../assets/img/logo.png" alt="" height="60">
       <span class="font-weight-bold px-2">
         610
       </span>
     </a>
-    </button>
 
-    <ul class="navbar-nav d-inline-block">
+    <ul class="navbar-nav ml-auto d-flex flex-row bd-highlight">
       <!-- <li v-for="link in links" class="nav-item">
         <a class="nav-link" v-bind:href="link.url">{{link.name}}</a>
       </li> -->
@@ -18,13 +17,13 @@
         </a>
       </li>
       <li>
-        <a class="nav-link" href="javascript:void(0);">
+        <a class="nav-link" href="#">
           <font-awesome-icon icon="question-circle" />
         </a>
       </li>
       <li>
         <a class="nav-link" href="javascript:void(0);">
-          <font-awesome-icon icon="user" /> Hello, 
+          <font-awesome-icon icon="user" class="mr-1"/> Hello, 
           <span v-if="user">{{user.name}}</span>
           <span v-else>Welcome</span>
         </a>
@@ -66,7 +65,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .navbar-light .navbar-nav {
-    width: 50%;
     text-align: right;
     li {
       display: inline-block;

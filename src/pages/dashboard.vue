@@ -1,6 +1,6 @@
 <template>
   <div class="pt-5">
-    <h1 class="text-center font-weight-bold text-success mb-3 text-uppercase">Cable Schedule</h1>
+    <h1 class="text-center font-weight-bold mb-3 text-uppercase">Cable Schedule</h1>
 
     <div class="container-fluid">
       <v-data-table
@@ -121,4 +121,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+h1 {
+  color:#3389C9;
+}
 </style>

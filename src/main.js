@@ -6,11 +6,11 @@ import router from './router'
 import VueResource from 'vue-resource'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee,faCog,faQuestionCircle,faUser,faTimes,faSyncAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee,faCog,faQuestionCircle,faUser,faTimes,faSyncAlt,faFileExcel,faPrint,faFilter,faCopy, faDesktop, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-library.add(faCoffee,faCog,faQuestionCircle,faUser,faTimes,faSyncAlt)
+library.add(faCoffee,faCog,faQuestionCircle,faUser,faTimes,faSyncAlt,faFileExcel,faPrint,faFilter,faCopy, faDesktop, faQuestion)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueResource);

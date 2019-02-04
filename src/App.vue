@@ -1,12 +1,6 @@
 <template>
   <div id="app">
-    <div id="side-menu" class="d-none">
-     <div class="d-flex">
-        <h2>tolbar</h2>
-        <font-awesome-icon icon="times"/>
-        <font-awesome-icon icon="sync-alt"/>
-     </div>
-    </div>
+   <SideMenu></SideMenu>
     <topNav v-bind:links="links"></topNav>
     <router-view/>
 
@@ -28,12 +22,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vuetify/dist/vuetify.min.css'
 
 import topNav from './components/topNav'
+import SideMenu from './components/SideMenu'
 
 Vue.use(BootstrapVue);
 
 export default {
   name: 'App',
-  components: { topNav },
+  components: { topNav,SideMenu },
   data:function(){
     return {
       links:[{
@@ -45,22 +40,44 @@ export default {
       }],
     }
   },
-  created(){
-
+  methods:{
+    toggleMenu(){
+      $("#side-menu").toggleClass("d-none");
+    }
   }
 }
 </script>
 
-<style scoped lang="scss" >
+
+<style lang="scss" >
+
+.cursor-pointer {
+  cursor: pointer!important;
+}
 #side-menu {
-  width: 300px;
+  width: 50vw;
+  max-width: 300px;
   background-color: #184470;
   color:#fff;
   position: fixed;
-  top:75px;
+  top:0px;
   right: 0px;
   z-index: 9;
   bottom: 0;
   height:100%;
+    .body-section {
+      svg {
+        font-size: 24px;
+        width: 26px;
+      }
+    }
+    .head-section {
+      .fa {
+        overflow: hidden;
+        flex: 0 2 auto!important;
+        width: 30px!important;
+        font-size: 24px;
+      }
+    }
 }
 </style>
